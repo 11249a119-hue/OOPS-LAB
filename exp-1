@@ -1,229 +1,83 @@
-/* 
---------------------------------------------
 Experiment No: 1
-AIM:
-To study and understand the basic concepts and principles 
-of Object-Oriented Programming (OOP) in C++.
---------------------------------------------
-QUESTION:
-What is Object-Oriented Programming (OOP)?
 
---------------------------------------------
-THEORY:
-Object-Oriented Programming (OOP) is a programming 
-paradigm based on the concept of "objects" that contain 
-data (attributes) and functions (methods) to operate on 
-that data.  
+Aim:
+To write a C program that calculates the electricity bill for a consumer based on the number of units consumed.
 
-C++ is an object-oriented programming language that 
-supports the main principles of OOP — encapsulation, 
-abstraction, inheritance, and polymorphism.  
-OOP helps in building modular, reusable, and maintainable 
-software systems.
+Algorithm:
+Start
+Input consumer name, consumer number, and number of units consumed.
+Compute the charge per unit according to this rule (example):
+0–100 units → ₹1.50 per unit
+101–200 units → ₹2.50 per unit
+201–500 units → ₹4.00 per unit
+Above 500 units → ₹6.00 per unit
+Calculate total bill = units × rate
+If total bill > ₹1000, add 10% surcharge.
+Display all details: name, number, units, and final amount.
+End
 
---------------------------------------------
-MAIN PRINCIPLES OF OOP:
-1. **Class and Object**
-2. **Encapsulation**
-3. **Abstraction**
-4. **Inheritance**
-5. **Polymorphism**
---------------------------------------------
-
-1️⃣ **CLASS AND OBJECT**
-A *class* is a blueprint or template for creating objects.  
-An *object* is an instance of a class.
-
-Example:
-```cpp
-#include <iostream>
-using namespace std;
-
-class Student {
-public:
-    string name;
-    int rollNo;
-
-    void display() {
-        cout << "Name: " << name << ", Roll No: " << rollNo << endl;
-    }
-};
+ Program :
+#include <stdio.h>
 
 int main() {
-    Student s1;              // Object creation
-    s1.name = "Alice";
-    s1.rollNo = 101;
-    s1.display();
+    int consumer_no;
+    char name[50];
+    float units, charge_per_unit, total, surcharge, net_amount;
+
+    // Input
+    printf("Enter Consumer Number: ");
+    scanf("%d", &consumer_no);
+    printf("Enter Consumer Name: ");
+    scanf("%s", name);
+    printf("Enter Units Consumed: ");
+    scanf("%f", &units);
+
+    // Calculate charge per unit
+    if (units <= 100)
+        charge_per_unit = 1.50;
+    else if (units <= 200)
+        charge_per_unit = 2.50;
+    else if (units <= 500)
+        charge_per_unit = 4.00;
+    else
+        charge_per_unit = 6.00;
+
+    total = units * charge_per_unit;
+
+    // Add surcharge if needed
+    if (total > 1000)
+        surcharge = total * 0.10;
+    else
+        surcharge = 0;
+
+    net_amount = total + surcharge;
+
+    // Output
+    printf("\n--- Electricity Bill ---\n");
+    printf("Consumer No.   : %d\n", consumer_no);
+    printf("Consumer Name  : %s\n", name);
+    printf("Units Consumed : %.2f\n", units);
+    printf("Charge/Unit    : ₹%.2f\n", charge_per_unit);
+    printf("Total Amount   : ₹%.2f\n", total);
+    printf("Surcharge      : ₹%.2f\n", surcharge);
+    printf("Net Amount     : ₹%.2f\n", net_amount);
+
     return 0;
 }
+
+Input:
+Enter Consumer Number: 1023
+Enter Consumer Name: Ramesh
+Enter Units Consumed: 250
+
 Output:
+Consumer No.   : 1023
+Consumer Name  : Ramesh
+Units Consumed : 250.00
+Charge/Unit    : ₹4.00
+Total Amount   : ₹1000.00
+Surcharge      : ₹0.00
+Net Amount     : ₹1000.00
 
-yaml
-Copy code
-Name: Alice, Roll No: 101
-2️⃣ ENCAPSULATION
-Encapsulation is the process of wrapping data and
-functions into a single unit (class) and restricting direct
-access using access specifiers (private, protected, public).
-
-Example:
-
-cpp
-Copy code
-#include <iostream>
-using namespace std;
-
-class Account {
-private:
-    double balance;
-
-public:
-    void deposit(double amount) {
-        balance += amount;
-    }
-    void showBalance() {
-        cout << "Balance: " << balance << endl;
-    }
-};
-
-int main() {
-    Account acc;
-    acc.deposit(1000);
-    acc.showBalance();
-    return 0;
-}
-Output:
-
-yaml
-Copy code
-Balance: 1000
-3️⃣ ABSTRACTION
-Abstraction hides unnecessary details from the user and
-shows only the essential features of an object.
-
-Example:
-
-cpp
-Copy code
-#include <iostream>
-using namespace std;
-
-class CoffeeMachine {
-public:
-    void makeCoffee() {
-        boilWater();
-        brewCoffee();
-        pourInCup();
-        cout << "Coffee is ready!" << endl;
-    }
-
-private:
-    void boilWater() { cout << "Boiling water..." << endl; }
-    void brewCoffee() { cout << "Brewing coffee..." << endl; }
-    void pourInCup() { cout << "Pouring into cup..." << endl; }
-};
-
-int main() {
-    CoffeeMachine c;
-    c.makeCoffee();  // User doesn’t see inner details
-    return 0;
-}
-Output:
-
-csharp
-Copy code
-Boiling water...
-Brewing coffee...
-Pouring into cup...
-Coffee is ready!
-4️⃣ INHERITANCE
-Inheritance allows one class (derived) to acquire the
-properties and behaviors of another (base) class.
-
-Example:
-
-cpp
-Copy code
-#include <iostream>
-using namespace std;
-
-class Vehicle {
-public:
-    void start() { cout << "Vehicle started" << endl; }
-};
-
-class Car : public Vehicle {
-public:
-    void honk() { cout << "Car horn beep!" << endl; }
-};
-
-int main() {
-    Car c1;
-    c1.start();  // Inherited function
-    c1.honk();   // Own function
-    return 0;
-}
-Output:
-
-arduino
-Copy code
-Vehicle started
-Car horn beep!
-5️⃣ POLYMORPHISM
-Polymorphism means “many forms.”
-It allows functions or operators to behave differently
-based on the object that invokes them.
-
-Example (Function Overriding):
-
-cpp
-Copy code
-#include <iostream>
-using namespace std;
-
-class Shape {
-public:
-    virtual void draw() {
-        cout << "Drawing a shape" << endl;
-    }
-};
-
-class Circle : public Shape {
-public:
-    void draw() override {
-        cout << "Drawing a circle" << endl;
-    }
-};
-
-int main() {
-    Shape* shape;
-    Circle c;
-    shape = &c;
-    shape->draw();  // Calls derived class function (runtime polymorphism)
-    return 0;
-}
-Output:
-
-arduino
-Copy code
-Drawing a circle
-ADVANTAGES OF OOP:
-
-Code reusability through inheritance
-
-Data security through encapsulation
-
-Easy debugging and maintenance
-
-Real-world modeling through classes and objects
-
-Flexibility via polymorphism
-
-Simplified program design and structure
-
-RESULT:
-Thus, the study and implementation of basic Object-Oriented
-Programming (OOP) concepts — Class, Object, Encapsulation,
-Abstraction, Inheritance, and Polymorphism — were successfully
-understood and demonstrated using C++ programs.
-*/
+Result:
+The program successfully calculates and displays the electricity bill for a consumer based on the units
