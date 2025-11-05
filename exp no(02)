@@ -1,0 +1,106 @@
+Exp no:02
+ 
+ AIM:
+To write a program in C language using Object-Oriented Programming (OOP) concepts such as encapsulation and data abstraction to store and display student information.
+
+ ALGORITHM:
+
+Start the program.
+
+Define a structure Student with the following members:
+
+Roll number (int)
+
+Name (char[50])
+
+Marks (float)
+
+Function pointers for input and display.
+
+Define two functions:
+
+inputStudent() to read student details.
+
+displayStudent() to print student details.
+
+Define a constructor function newStudent() to:
+
+Allocate memory for a new Student.
+
+Initialize data and assign function pointers.
+
+In the main() function:
+
+Create a Student object using newStudent().
+
+Call its input() method to enter data.
+
+Call its display() method to display data.
+
+Free the dynamically allocated memory.
+
+Stop the program.
+
+💻 PROGRAM
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct {
+    int rollNo;
+    char name[50];
+    float marks;
+
+    void (*input)(struct Student *self);
+    void (*display)(struct Student *self);
+} Student;
+
+void inputStudent(Student *self) {
+    printf("Enter Roll Number: ");
+    scanf("%d", &self->rollNo);
+    getchar(); 
+    printf("Enter Name: ");
+    fgets(self->name, sizeof(self->name), stdin);
+    self->name[strcspn(self->name, "\n")] = '\0';
+    printf("Enter Marks: ");
+    scanf("%f", &self->marks);
+}
+
+void displayStudent(Student *self) {
+    printf("\n--- Student Information ---\n");
+    printf("Roll No : %d\n", self->rollNo);
+    printf("Name    : %s\n", self->name);
+    printf("Marks   : %.2f\n", self->marks);
+}
+
+Student *newStudent() {
+    Student *s = (Student *)malloc(sizeof(Student));
+    s->rollNo = 0;
+    strcpy(s->name, "");
+    s->marks = 0.0f;
+    s->input = inputStudent;
+    s->display = displayStudent;
+    return s;
+}
+
+int main() {
+    Student *s1 = newStudent();
+    s1->input(s1);
+    s1->display(s1);
+    free(s1);
+    return 0;
+}
+
+INPUT::
+Enter Roll Number: 101
+Enter Name: Alice
+Enter Marks: 89.5
+
+output:
+Roll No : 101
+Name    : Alice
+Marks   : 89.50
+
+RESULT:
+The program successfully demonstrates how OOP concepts can be simulated in C using structures, function pointers, and modular programming.
+It accepts and displays student information in an organized manner.
